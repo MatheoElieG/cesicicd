@@ -13,7 +13,7 @@ jobs:
           path: ~/.npm
           key: npm-cache
       - run: npm ci
-      - run: npm run e2e:headless
+      - run: npm run e2e:headless 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
