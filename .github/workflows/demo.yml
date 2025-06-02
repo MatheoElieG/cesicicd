@@ -17,7 +17,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: test-videos-${{github.github.sha}}
+          name: test-videos
           path: cypress/videos
           overwrite: true
   build:
