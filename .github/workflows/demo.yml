@@ -7,12 +7,12 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Cache node_modules
+      - name: Cache npm
         uses: actions/cache@v4
         with:
-          path: node_modules
-          key: 'node_modules'
-      - run: npm install
+          path: ~/.npm
+          key: npm-cache
+      - run: npm ci
       - run: npm run e2e:headless
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -26,10 +26,10 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Cache node_modules
+      - name: Cache npm
         uses: actions/cache@v4
         with:
-          path: node_modules
-          key: 'node_modules'
-      - run: npm install
+          path: ~/.npm
+          key: npm-cache
+      - run: npm ci
       - run: npm run build
