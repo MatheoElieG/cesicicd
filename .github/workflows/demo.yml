@@ -49,7 +49,9 @@ jobs:
           key: ${{ secrets.PROD_KEY }}
           port: 22
           script: |
+            source .bashrc
             cd cesicicd
             git pull
-            ~/.nvm/versions/node/v22.16.0/bin/npm run build 
-            ~/.nvm/versions/node/v22.16.0/bin/pm2 restart all
+            npm i 
+            npm run build 
+            pm2 restart all
