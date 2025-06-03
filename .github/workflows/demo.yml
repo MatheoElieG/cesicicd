@@ -5,31 +5,49 @@ on:
     branches:
       - main
 jobs:
-  build-and-push:
+  # build-and-push:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - 
+  #       name: Check out repository code
+  #       uses: actions/checkout@v4
+  #     - 
+  #       name: Login to Docker Hub
+  #       uses: docker/login-action@v3
+  #       with:
+  #         registry: ghcr.io
+  #         username: ${{ github.actor }}
+  #         password: ${{ secrets.TOKEN }}
+  #     - 
+  #       name: Set up QEMU
+  #       uses: docker/setup-qemu-action@v3
+  #     - 
+  #       name: Set up Docker Buildx
+  #       uses: docker/setup-buildx-action@v3
+  #     - 
+  #       name: Build and push
+  #       uses: docker/build-push-action@v6
+  #       with:
+  #         push: true
+  #         tags: ghcr.io/matheoelieg/cesicicd/app:latest
+
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - 
-        name: Check out repository code
-        uses: actions/checkout@v4
-      - 
-        name: Login to Docker Hub
-        uses: docker/login-action@v3
+      - name: Deploy to prod
+        uses: appleboy/ssh-action@v1
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.TOKEN }}
-      - 
-        name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-      - 
-        name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-      - 
-        name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          push: true
-          tags: ghcr.io/matheoelieg/cesicicd/app:latest
+          host: ${{ secrets.PROD_HOST }}
+          username: ${{ secrets.PROD_USER }}
+          key: ${{ secrets.PROD_KEY }}
+          port: 22
+          script: |
+            docker pull ghcr.io/matheoelieg/cesicicd/app:latest
+            docker stop cesi-app || true
+            docker rm cesi-app || true
+            docker run -d --name cesi-app -p 3000:3000 ghcr.io/matheoelieg/cesicicd/app:latest
+
+
 
   # test:
   #   needs: build
