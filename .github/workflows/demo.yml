@@ -15,6 +15,7 @@ jobs:
           key: npm-cache 
       - name: Check out repository code
         uses: actions/checkout@v4
+      - run: npm ci && npm run build
 
   test:
     needs: build
@@ -43,7 +44,7 @@ jobs:
       - name: Deploy to prod
         uses: appleboy/ssh-action@v1
         with:
-          host: ${{ secrets.PROD_ADDRESS }}
+          host: 52.0.9.222
           username: ${{ secrets.PROD_USER }}
           key: ${{ secrets.PROD_KEY }}
           port: 22
