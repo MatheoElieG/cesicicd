@@ -69,8 +69,9 @@ jobs:
           key: ${{ secrets.PROD_KEY }}
           port: 22
           script: |
+            cd ~/cesicicd
+            git pull
             docker pull ghcr.io/matheoelieg/cesicicd/app:latest
-            docker stop cesi-app || true
-            docker rm cesi-app || true
-            docker run -d --name cesi-app -p 3000:3000 ghcr.io/matheoelieg/cesicicd/app:latest
+            docker compose down | true
+            docker compose up -d
             
