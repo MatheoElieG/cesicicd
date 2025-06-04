@@ -79,7 +79,7 @@ jobs:
             git pull
             docker pull ghcr.io/matheoelieg/cesicicd/app-rc:latest
             docker compose -f docker-compose.stagging.yml down || true
-            docker compose -f docker-compose.stagging.yml up -d
+            docker compose -f docker-compose.stagging.yml run -d
 
       - name: Deploy to production
         if: github.ref_name == 'main'
@@ -94,4 +94,4 @@ jobs:
             git pull
             docker pull ghcr.io/matheoelieg/cesicicd/app:latest
             docker compose -f docker-compose.prod.yml down || true
-            docker compose -f docker-compose.prod.yml up -d
+            docker compose -f docker-compose.prod.yml run -d
