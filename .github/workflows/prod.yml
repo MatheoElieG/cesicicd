@@ -72,6 +72,6 @@ jobs:
             cd ~/cesicicd
             git pull
             docker pull ghcr.io/matheoelieg/cesicicd/app:latest
-            docker compose down | true
-            docker compose up -d
+            docker compose -f docker-compose.prod.yml down | true
+            docker compose -f docker-compose.prod.yml up -d 
             
