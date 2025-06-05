@@ -4,7 +4,7 @@ services:
     command:
       - "--api.insecure=true"
       - "--providers.docker"
-      - "--entryPoints.streaming.address=:8000/tdc"
+      - "--entryPoints.streaming.address=:8000/tcp"
     ports:
       - "8000:8000"
       - "8080:8080"
