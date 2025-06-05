@@ -1,24 +1,28 @@
 services:
   reverse-proxy:
     image: traefik:v3.4
-    command: --api.insecure=true --providers.docker
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker"
+      - "--entryPoints.web;address=:8000"
     ports:
-      - "80:80"
+      - "8000:8000"
       - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - traefik
-  
+
 
   app-stagging:
     image: ghcr.io/matheoelieg/cesicicd/app-rc:latest
     restart: always
     labels:
       - "traefik.http.routers.app-stagging.rule=Host(`cesi-stagging.mathdev.fr`)"
+      - "traefik.http.routers.app-stagging.entrypoints=web"
     networks:
       - traefik
-  
+
 
 networks:
   traefik:
