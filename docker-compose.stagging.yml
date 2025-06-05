@@ -7,10 +7,19 @@ services:
       - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - traefik
+  
 
   app-stagging:
     image: ghcr.io/matheoelieg/cesicicd/app-rc:latest
     restart: always
     labels:
       - "traefik.http.routers.app-stagging.rule=Host(`cesi-stagging.mathdev.fr`)"
-      - "traefik.http.services.app-stagging.loadbalancer.server.port=3000"
+    networks:
+      - traefik
+  
+
+networks:
+  traefik:
+    external: false
