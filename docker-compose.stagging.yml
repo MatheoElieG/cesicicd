@@ -13,3 +13,4 @@ services:
     restart: always
     labels:
       - "traefik.http.routers.app-stagging.rule=Host(`cesi-stagging.mathdev.fr`)"
+      - "traefik.http.services.app-stagging.loadbalancer.server.port=3000"
