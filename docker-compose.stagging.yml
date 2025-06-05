@@ -1,10 +1,11 @@
 services:
   reverse-proxy:
     image: traefik:v3.4
+    restart: always
     command:
       - "--api.insecure=true"
       - "--providers.docker"
-      - "--entryPoints.streaming.address=:8000/tcp"
+      - "--entryPoints.web.address=:8000"
     ports:
       - "8000:8000"
       - "8090:8080"
