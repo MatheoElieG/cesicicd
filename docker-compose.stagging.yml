@@ -4,7 +4,7 @@ services:
     command:
       - "--api.insecure=true"
       - "--providers.docker"
-      - "--entryPoints.web;address=:8000"
+      - "--entryPoints.streaming.address=:8000/tdc"
     ports:
       - "8000:8000"
       - "8080:8080"
@@ -19,7 +19,6 @@ services:
     restart: always
     labels:
       - "traefik.http.routers.app-stagging.rule=Host(`cesi-stagging.mathdev.fr`)"
-      - "traefik.http.routers.app-stagging.entrypoints=web"
     networks:
       - traefik
 
